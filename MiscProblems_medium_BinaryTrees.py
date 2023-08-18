@@ -148,3 +148,102 @@ def deleteBinaryTree(node):
 # tree = deleteBinaryTree(tree.root)
 # -----------------------------------------------------------------------------
 # -----------------------------------------------------------------------------
+
+
+# traverse a tree in a preorder fashion - DepthFirst
+def preOrderDFSTreeTraversal(tree):
+    if not tree.root:
+        return None
+    queue = []
+
+    def traverse(node):
+        queue.append(node)
+        print(node.val)
+        if node.left:
+            traverse(node.left)
+        if node.right:
+            traverse(node.right)
+
+    traverse(tree.root)
+
+
+# nums = [4, 10, 20, 5, 12, 89, 45, 23]
+# tree = createATree(nums)
+# preOrderTreeTraversal(tree)
+# -----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
+
+
+# traverse a tree in a postorder fashion - DepthFirst
+def postOrderDFSTreeTraversal(tree):
+    if not tree.root:
+        return None
+    queue = []
+
+    def traverse(node):
+        if node.left:
+            traverse(node.left)
+        if node.right:
+            traverse(node.right)
+        queue.append(node)
+        print(node.val)
+
+    traverse(tree.root)
+
+
+# nums = [4, 10, 20, 5, 12, 89, 45, 23]
+# tree = createATree(nums)
+# postOrderTreeTraversal(tree)
+# -----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
+
+
+# traverse a tree in an inorder fashion - DepthFirst
+def inOrderDFSTreeTraversal(tree):
+    if not tree.root:
+        return None
+    queue = []
+
+    def traverse(node):
+        if node.left:
+            traverse(node.left)
+        queue.append(node)
+        print(node.val)
+        if node.right:
+            traverse(node.right)
+
+    traverse(tree.root)
+
+
+# nums = [4, 10, 20, 5, 12, 89, 45, 23]
+# tree = createATree(nums)
+# inorderTreeTraversal(tree)
+# -----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
+
+
+# traverse a tree in an inorder fashion - BreadthFirst
+def inOrderBFSTreeTraversal(tree):
+    if not tree.root:
+        return None
+    queue = []
+    queue.append(tree.root)
+    print(tree.root.val)
+    while queue:
+        nodesInQueue = len(queue)
+        while nodesInQueue:
+            current = queue.pop(0)
+            if current.left:
+                print(current.left.val)
+                queue.append(current.left)
+            if current.right:
+                print(current.right.val)
+                queue.append(current.right)
+            nodesInQueue -= 1
+
+
+nums = [4, 10, 20, 5, 12, 89, 45, 23]
+tree = createATree(nums)
+inOrderBFSTreeTraversal(tree)
+# -----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
