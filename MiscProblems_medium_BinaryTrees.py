@@ -1,3 +1,24 @@
+# Binary Trees are:
+# - unordered
+# - duplicates are allowed
+# - any operation takes O(N)
+# - insertion is as follows:
+#   - insert in left if left is empty
+#   - otherwise insert in right
+#
+#
+#                  1
+#          2               3
+#      4       5       6       7
+#    8               9   10
+#
+# Traversal techniques:
+# - In-Order: 8 4 2 5 1 9 6 10 3 7
+# - Pre-Order: 1 2 4 8 5 3 6 9 10 7
+# - Post-Order: 8 4 5 2 9 10 6 7 3 1
+# - Level-Order: 1 2 3 4 5 6 7 8 9 10
+
+
 class Node:
     def __init__(self, value) -> None:
         self.val = value
@@ -135,7 +156,6 @@ def maxDepth(node):
 def deleteBinaryTree(node):
     if not node:
         return None
-
     if node.left:
         deleteBinaryTree(node.left)
     if node.right:
@@ -150,7 +170,43 @@ def deleteBinaryTree(node):
 # -----------------------------------------------------------------------------
 
 
+# traverse a tree in an inorder fashion - DepthFirst
+# depth of the node on the left
+# the node
+# depth of the node on the right
+def inOrderDFSTreeTraversal(tree):
+    if not tree.root:
+        return None
+    queue = []
+
+    def traverse(node):
+        if node.left:
+            traverse(node.left)
+        queue.append(node)
+        if node.right:
+            traverse(node.right)
+
+    traverse(tree.root)
+    return queue
+
+
+#                   4
+#          10               20
+#      5       12       89       45
+#   23   32
+# nums = [4, 10, 20, 5, 12, 89, 45, 23, 32]
+# tree = createATree(nums)
+# Q = inOrderDFSTreeTraversal(tree)
+# for q in Q:
+#     print(q.val, end=" ")
+# -----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
+
+
 # traverse a tree in a preorder fashion - DepthFirst
+# the node
+# depth of the node on the left
+# depth of the node on the right
 def preOrderDFSTreeTraversal(tree):
     if not tree.root:
         return None
@@ -158,23 +214,32 @@ def preOrderDFSTreeTraversal(tree):
 
     def traverse(node):
         queue.append(node)
-        print(node.val)
         if node.left:
             traverse(node.left)
         if node.right:
             traverse(node.right)
 
     traverse(tree.root)
+    return queue
 
 
-# nums = [4, 10, 20, 5, 12, 89, 45, 23]
+#                   4
+#          10               20
+#      5       12       89       45
+#   23   32
+# nums = [4, 10, 20, 5, 12, 89, 45, 23, 32]
 # tree = createATree(nums)
-# preOrderTreeTraversal(tree)
+# Q = preOrderDFSTreeTraversal(tree)
+# for q in Q:
+#     print(q.val, end=" ")
 # -----------------------------------------------------------------------------
 # -----------------------------------------------------------------------------
 
 
 # traverse a tree in a postorder fashion - DepthFirst
+# depth of the node on the left
+# depth of the node on the right
+# the node
 def postOrderDFSTreeTraversal(tree):
     if not tree.root:
         return None
@@ -186,64 +251,54 @@ def postOrderDFSTreeTraversal(tree):
         if node.right:
             traverse(node.right)
         queue.append(node)
-        print(node.val)
 
     traverse(tree.root)
+    return queue
 
 
-# nums = [4, 10, 20, 5, 12, 89, 45, 23]
+#                   4
+#          10               20
+#      5       12       89       45
+#   23   32
+# nums = [4, 10, 20, 5, 12, 89, 45, 23, 32]
 # tree = createATree(nums)
-# postOrderTreeTraversal(tree)
+# Q = postOrderDFSTreeTraversal(tree)
+# for q in Q:
+#     print(q.val, end=" ")
 # -----------------------------------------------------------------------------
 # -----------------------------------------------------------------------------
 
 
-# traverse a tree in an inorder fashion - DepthFirst
-def inOrderDFSTreeTraversal(tree):
+# traverse a tree in a level order fashion - BreadthFirst
+def levelOrderBFSTreeTraversal(tree):
     if not tree.root:
         return None
-    queue = []
-
-    def traverse(node):
-        if node.left:
-            traverse(node.left)
-        queue.append(node)
-        print(node.val)
-        if node.right:
-            traverse(node.right)
-
-    traverse(tree.root)
-
-
-# nums = [4, 10, 20, 5, 12, 89, 45, 23]
-# tree = createATree(nums)
-# inorderTreeTraversal(tree)
-# -----------------------------------------------------------------------------
-# -----------------------------------------------------------------------------
-
-
-# traverse a tree in an inorder fashion - BreadthFirst
-def inOrderBFSTreeTraversal(tree):
-    if not tree.root:
-        return None
+    data = []
     queue = []
     queue.append(tree.root)
-    print(tree.root.val)
+    data.append(tree.root)
     while queue:
         nodesInQueue = len(queue)
         while nodesInQueue:
             current = queue.pop(0)
             if current.left:
-                print(current.left.val)
+                data.append(current.left)
                 queue.append(current.left)
             if current.right:
-                print(current.right.val)
+                data.append(current.right)
                 queue.append(current.right)
             nodesInQueue -= 1
+    return data
 
 
-nums = [4, 10, 20, 5, 12, 89, 45, 23]
-tree = createATree(nums)
-inOrderBFSTreeTraversal(tree)
+#                   4
+#          10               20
+#      5       12       89       45
+#   23   32
+# nums = [4, 10, 20, 5, 12, 89, 45, 23, 32]
+# tree = createATree(nums)
+# Q = levelOrderBFSTreeTraversal(tree)
+# for q in Q:
+#     print(q.val, end=" ")
 # -----------------------------------------------------------------------------
 # -----------------------------------------------------------------------------
