@@ -1,5 +1,6 @@
 # Taken out from https://www.geeksforgeeks.org/searching-algorithms
 
+
 # find two elements whose sum is closest to zero
 #   i
 # 5 3 1 7 9 1 2 8 6 1 0
@@ -15,6 +16,7 @@ def SumClosestToZero(arr):
         k += 1
     return sum
 
+
 # print(SumClosestToZero([5, 3, 3, 7, 9, 1, 0, 2, 8, 6, 5]))
 
 
@@ -24,12 +26,12 @@ def SumClosestToZero(arr):
 def pairWithAGivenDiff(arr, num):
     result = []
     for i in range(len(arr)):
-        for j in range(i+1, len(arr)):
-            if abs(arr[i]-arr[j]) == num:
+        for j in range(i + 1, len(arr)):
+            if abs(arr[i] - arr[j]) == num:
                 result.append([arr[i], arr[j]])
-                print("Found one pair [%s, %s] at [%s, %s]" %
-                      (arr[i], arr[j], i, j))
+                print("Found one pair [%s, %s] at [%s, %s]" % (arr[i], arr[j], i, j))
     return result
+
 
 # print(pairWithAGivenDiff([5, 3, 8, 7, 9, 1, 2, 8, 6, 1, 0], 6))
 
@@ -49,6 +51,7 @@ def pairWithAGivenDiffSorted(arr, num):
         else:
             i += 1
     return False
+
 
 # print(pairWithAGivenDiffSorted([2, 4, 15, 27, 48, 99], 21))
 
@@ -92,6 +95,7 @@ def findCommonElements(arr1, arr2, arr3):
 # arr3 = [1, 4, 5, 6]
 # print(findCommonElements(arr1, arr2, arr3))
 
+
 # i
 # 4 3 66 12 54 66 90 98 2 2 87
 #   j
@@ -102,6 +106,7 @@ def firstRepeatingNumber(arr):
             elements[arr[i]] = 1
         else:
             print("This number %s already exists." % (arr[i]))
+
 
 # firstRepeatingNumber([4, 3, 66, 12, 54, 66, 90, 98, 2, 2, 87])
 
@@ -126,6 +131,7 @@ def largestPairSum(arr):
             sum = arr[i] + arr[j]
     return sum
 
+
 # print(largestPairSum([4, 3, 66, 12, 54, 66, 90, 87, 2, 2, 98]))
 
 # i
@@ -142,9 +148,9 @@ def findTripletsWithZeroSum(arr):
     #                 print(arr[i], arr[j], arr[k])
 
     arr.sort()
-    for i in range(len(arr)-2):
-        l = i+1
-        r = len(arr)-1
+    for i in range(len(arr) - 2):
+        l = i + 1
+        r = len(arr) - 1
         while l < r:
             if arr[i] + arr[l] + arr[r] == 0:
                 print(arr[i], arr[l], arr[r])
@@ -154,6 +160,7 @@ def findTripletsWithZeroSum(arr):
                 r -= 1
             else:
                 l += 1
+
 
 # findTripletsWithZeroSum([0, -1, 2, -3, 1, 6, -6, 0])
 
@@ -184,37 +191,39 @@ def findPivot(arr):
     leftMax = [None] * len(arr)
     leftMax[0] = arr[0]
     for i in range(1, len(arr)):
-        leftMax[i] = max(leftMax[i-1], arr[i-1])
+        leftMax[i] = max(leftMax[i - 1], arr[i - 1])
 
     rightMin = [None] * len(arr)
-    rightMin[len(arr)-1] = arr[len(arr)-1]
-    for i in range(len(arr)-2, -1, -1):
-        rightMin[i] = min(rightMin[i+1], arr[i])
+    rightMin[len(arr) - 1] = arr[len(arr) - 1]
+    for i in range(len(arr) - 2, -1, -1):
+        rightMin[i] = min(rightMin[i + 1], arr[i])
 
-    for i in range(1, len(arr)-1):
-        if leftMax[i-1] <= arr[i] and arr[i] <= rightMin[i+1]:
+    for i in range(1, len(arr) - 1):
+        if leftMax[i - 1] <= arr[i] and arr[i] <= rightMin[i + 1]:
             return i
 
     return -1
 
 
-findPivot([5, 1, 4, 3, 8, 6, 10, 7, 9])
+# findPivot([5, 1, 4, 3, 8, 6, 10, 7, 9])
 
 
 def binarySearch(arr, num):
     from math import floor
+
     start = 0
     end = len(arr) - 1
-    middle = floor((start + end)/2)
-    while arr[middle] != num and start <= end:
-        if arr[middle] > num:
+    middle = floor((start + end) / 2)
+    while start <= end:
+        if arr[middle] == num:
+            return middle
+        elif arr[middle] > num:
             end = middle - 1
         else:
             start = middle + 1
-        middle = floor((start + end)/2)
-    if arr[middle] == num:
-        return middle
+        middle = floor((start + end) / 2)
     return -1
+
 
 # print(binarySearch([0, 1, 4, 5, 7, 8, 9], 7))
 
@@ -237,6 +246,7 @@ def findThreeLargestNumbers(arr):
             max3 = arr[i]
     print(max1, max2, max3)
 
+
 # findThreeLargestNumbers([10, 4, 3, 50, 23, 90])
 
 
@@ -249,13 +259,13 @@ def findMissingAndRepeatingNum(arr, n):
             elems[arr[i]] = 1
         else:
             elems[arr[i]] += 1
-    print("Repeating item is: %s" %
-          [k for k in elems.items() if k[1] > 1][0][0])
-    orgSum = n*(n+1)/2
+    print("Repeating item is: %s" % [k for k in elems.items() if k[1] > 1][0][0])
+    orgSum = n * (n + 1) / 2
     sum = 0
     for item in elems.items():
         sum += item[0]
-    print("Missing number is: %d" % (orgSum-sum))
+    print("Missing number is: %d" % (orgSum - sum))
+
 
 # findMissingAndRepeatingNum([7, 3, 4, 5, 5, 6, 2], 7)
 
@@ -264,18 +274,20 @@ def findMissingAndRepeatingNum(arr, n):
 # non-increasing order, count the number of 1’s in it.
 def countOnes(arr):
     from math import floor
+
     start = 0
-    end = len(arr)-1
+    end = len(arr) - 1
     if arr[0] == 0:
         return -1
     while start <= end:
-        mid = floor((start+end)/2)
-        if arr[mid] == 1 and arr[mid+1] == 0:
-            return mid+1
-        elif arr[mid+1] == 1:
+        mid = floor((start + end) / 2)
+        if arr[mid] == 1 and arr[mid + 1] == 0:
+            return mid + 1
+        elif arr[mid + 1] == 1:
             start = mid + 1
         else:
             end = mid - 1
+
 
 # print(countOnes([1, 1, 0, 0, 0, 0, 0]))
 
@@ -289,11 +301,12 @@ def countOnes(arr):
 def findKLargestElements(arr, k):
     temp = [arr[0], arr[1], arr[2]]
     minTemp = min(temp)
-    for i in range(3, len(arr)-1):
+    for i in range(3, len(arr) - 1):
         if arr[i] > minTemp:
             temp[temp.index(minTemp)] = arr[i]
             minTemp = min(temp)
     return temp
+
 
 # print(findKLargestElements([11, 5, 12, 9, 44, 17, 2], 3))
 
@@ -333,17 +346,18 @@ def kthSmallestinMatrix(arr, n, k):
         while r >= rn and c <= cn:
             entries += 1
             if entries < k:
-                pastItems.append(arr[r-1][c-1])
+                pastItems.append(arr[r - 1][c - 1])
             else:
                 found = True
-                return arr[r-1][c-1]
+                return arr[r - 1][c - 1]
             r -= 1
             c += 1
-        if (r == 0 and (c >= 2 or c <= n+1)) and ~found:
+        if (r == 0 and (c >= 2 or c <= n + 1)) and ~found:
             rn = 1
             cn += 1
             r = cn
             c = 1
+
 
 # arr = [[10, 20, 29, 40],
 #        [15, 25, 35, 45],
@@ -357,12 +371,14 @@ def kthSmallestinMatrix(arr, n, k):
 
 def kthNumber(mat, k):
     import heapq
+
     heap = [[mat[i][0], i, 0] for i in range(len(mat))]
     [heapq.heapify(heap) for i in range(len(mat))]
-    for i in range(k-1):
+    for i in range(k - 1):
         val, row, col = heapq.heappop(heap)
-        heapq.heappush(heap, [mat[row][col+1], row, col+1])
+        heapq.heappush(heap, [mat[row][col + 1], row, col + 1])
     return heapq.heappop(heap[0])
+
 
 # print(kthNumber([
 #                 [10, 20, 30, 40],
@@ -375,20 +391,22 @@ def kthNumber(mat, k):
 # find the maximum value in the array.
 def findMaximum(arr):
     start = 0
-    end = len(arr)-1
+    end = len(arr) - 1
     from math import floor
+
     while start <= end:
-        mid = floor((start + end)/2)
+        mid = floor((start + end) / 2)
         # 87 100 50
-        if arr[mid] > arr[mid+1] and arr[mid] > arr[mid-1]:
+        if arr[mid] > arr[mid + 1] and arr[mid] > arr[mid - 1]:
             return arr[mid]
         # 123 100 50
-        elif arr[mid] > arr[mid+1] and arr[mid] < arr[mid-1]:
+        elif arr[mid] > arr[mid + 1] and arr[mid] < arr[mid - 1]:
             end = mid - 1
         # 50 100 123
-        elif arr[mid] < arr[mid+1] and arr[mid] > arr[mid-1]:
+        elif arr[mid] < arr[mid + 1] and arr[mid] > arr[mid - 1]:
             start = mid + 1
     return -1
+
 
 # print(findMaximum([2, 4, 6, 8, 10, 3, 1]))
 
@@ -398,6 +416,7 @@ def findMaximum(arr):
 # Given that all array elements are distinct.
 def kthSmallest(arr, k):
     import heapq
+
     if k > len(arr):
         return -1
     heap = []
@@ -411,6 +430,7 @@ def kthSmallest(arr, k):
             heapq._heapify_max(heap)
     return heap[0]
 
+
 # print(kthSmallest([10, 5, 4, 3, 48, 6, 2, 33, 53, 10], 9))
 
 
@@ -421,13 +441,14 @@ def findNumInSortedAndRotatedArray(arr, num):
     start = 0
     end = len(arr)
     from math import floor
+
     pivot = None
     while start < end:
-        mid = floor((start+end)/2)
-        if arr[mid] < arr[mid-1]:
+        mid = floor((start + end) / 2)
+        if arr[mid] < arr[mid - 1]:
             pivot = mid - 1
             break
-        elif arr[mid] > arr[mid+1] and arr[mid] > arr[mid-1]:
+        elif arr[mid] > arr[mid + 1] and arr[mid] > arr[mid - 1]:
             pivot = mid
             break
         elif arr[start] >= arr[mid]:
@@ -439,9 +460,9 @@ def findNumInSortedAndRotatedArray(arr, num):
         end = pivot
     else:
         start = pivot + 1
-        end = len(arr)-1
+        end = len(arr) - 1
     while start <= end:
-        mid = floor((start+end)/2)
+        mid = floor((start + end) / 2)
         if arr[mid] < num:
             start = mid + 1
         elif arr[mid] > num:
@@ -462,11 +483,11 @@ def findThePeakElement(arr):
     i, j = 0, 2
     peakElements = []
     while j < len(arr):
-        if arr[i+1] > arr[i] and arr[i+1] > arr[j]:
-            peakElements.append(arr[i+1])
-        elif arr[i] > arr[i+1] and arr[i+1] > arr[j]:
+        if arr[i + 1] > arr[i] and arr[i + 1] > arr[j]:
+            peakElements.append(arr[i + 1])
+        elif arr[i] > arr[i + 1] and arr[i + 1] > arr[j]:
             mightBeDecreasing += 1
-        elif arr[i] < arr[i+1] and arr[i+1] < arr[j]:
+        elif arr[i] < arr[i + 1] and arr[i + 1] < arr[j]:
             mightBeIncreasing += 1
         i += 1
         j += 1
@@ -474,7 +495,7 @@ def findThePeakElement(arr):
     if mightBeDecreasing == i:
         return arr[0]
     elif mightBeIncreasing == i:
-        return arr[len(arr)-1]
+        return arr[len(arr) - 1]
 
     return peakElements
 
@@ -514,9 +535,9 @@ def getMinMax(low, high, arr):
 
 
 # Driver code
-arr = [205, 13, 6, 44, 55, 2, 2, 23, 11, 101, 6, -62]
-high = len(arr) - 1
-low = 0
-arr_max, arr_min = getMinMax(low, high, arr)
-print('Minimum element is ', arr_min)
-print('nMaximum element is ', arr_max)
+# arr = [205, 13, 6, 44, 55, 2, 2, 23, 11, 101, 6, -62]
+# high = len(arr) - 1
+# low = 0
+# arr_max, arr_min = getMinMax(low, high, arr)
+# print("Minimum element is ", arr_min)
+# print("nMaximum element is ", arr_max)
