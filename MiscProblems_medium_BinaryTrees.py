@@ -12,7 +12,7 @@
 #      4       5       6       7
 #    8               9   10
 #
-# Traversal techniques:
+# Traversal techniques (this is not realistic because left is still empty):
 # - In-Order: 8 4 2 5 1 9 6 10 3 7
 # - Pre-Order: 1 2 4 8 5 3 6 9 10 7
 # - Post-Order: 8 4 5 2 9 10 6 7 3 1

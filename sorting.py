@@ -12,14 +12,11 @@ def bubbleSort(arr):
         for i in range(size-1):
             if arr[i] > arr[i+1]:
                 arr[i], arr[i+1] = arr[i+1], arr[i]
-                stillSwapping = True
-            else:
-                if stillSwapping is not True:
-                    stillSwapping = False
+                stillSwapping = True # if no swapping happened, it means the list is already ordered
         size -= 1
     return arr
 # print(bubbleSort([5, 3, 2, 1, 6, 7]))
-
+# print(bubbleSort([0, 2, 5, 10, 8, 15])) # you can test the stillSwapping effectiveness with this example
 
 # Looks for the minimum and swaps it with the first number
 # worse than bubble sort, may be better than it if you wanna minimize the number of swaps, since you only swap once
@@ -58,7 +55,7 @@ def insertionSort(arr):
     return arr
 
 
-print(insertionSort([-4, -7, 5, 3, 2, 1, 6, -3, 7]))
+# print(insertionSort([-4, -7, 5, 3, 2, 1, 6, -3, 7]))
 
 
 # break down your array to single item arrays, merge them back into two item arrays
