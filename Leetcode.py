@@ -199,17 +199,17 @@ def lengthOfLongestSubstring(s: str) -> int:
     i = 0
     j = 0
     maxLen = 0
-    strdict = {}
+    shash = {}
     if len(s) == 0: return 0
     if len(s) == 1: return 1
     if s == " ": return 1
     while j < len(s):
-        if i < len(s) and s[i] not in strdict.keys():
-            strdict[s[i]] = 1
+        if i < len(s) and s[i] not in shash:
+            shash[s[i]] = 1
             if i is not len(s): i += 1
         else:
             maxLen = max(maxLen, abs(j - i))
-            strdict = {}
+            shash = {}
             j += 1
             i = j
     print(maxLen)
