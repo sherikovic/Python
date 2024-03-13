@@ -226,4 +226,4 @@ def mergeSort(arr):
     return mergeTwoArrays(leftArray, rightArray)
 
 
-# print(mergeSort([5, 3, 6, 44, 2, 2, 2, 23, 11, 101, 6, -62]))
+# print(mergeSort([5, 3, 6, 44, 2, 2, 2, 23, 11, 101, 6, -62]))    

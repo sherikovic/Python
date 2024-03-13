@@ -38,7 +38,6 @@ class BinaryTree:
         else:
             # initialize a queue
             queue = [self.root]
-
             while queue:
                 current = queue.pop(0)
                 if not current.left:
@@ -50,6 +49,163 @@ class BinaryTree:
                 else:
                     queue.append(current.left)
                     queue.append(current.right)
+
+    # traverse a tree in an inorder fashion - DepthFirst
+    # depth of the node on the left
+    # the node
+    # depth of the node on the right
+    def inOrderDFSTraverse(self):
+        if not self.root:
+            return None
+
+        queue = []
+        def traverse(node):
+            if node.left:
+                traverse(node.left)
+            queue.append(node)
+            if node.right:
+                traverse(node.right)
+
+        traverse(self.root)
+        return queue
+
+    # traverse a tree in a preorder fashion - DepthFirst
+    # the node
+    # depth of the node on the left
+    # depth of the node on the right
+    def preOrderDFSTraverse(self):
+        if not self.root:
+            return None
+
+        queue = []
+        def traverse(node):
+            queue.append(node)
+            if node.left:
+                traverse(node.left)
+            if node.right:
+                traverse(node.right)
+
+        traverse(self.root)
+        return queue
+
+    # traverse a tree in a postorder fashion - DepthFirst
+    # depth of the node on the left
+    # depth of the node on the right
+    # the node
+    def postOrderDFSTraverse(self):
+        if not self.root:
+            return None
+
+        queue = []
+        def traverse(node):
+            if node.left:
+                traverse(node.left)
+            if node.right:
+                traverse(node.right)
+            queue.append(node)
+
+        traverse(self.root)
+        return queue
+
+    def levelOrderBFSTraverse(self):
+        if not self.root:
+            return None
+
+        data = [self.root]
+        queue = [self.root]
+        while queue:
+            nodesInQueue = len(queue)
+            while nodesInQueue:
+                current = queue.pop(0)
+                if current.left:
+                    data.append(current.left)
+                    queue.append(current.left)
+                if current.right:
+                    data.append(current.right)
+                    queue.append(current.right)
+                nodesInQueue -= 1
+        return data
+
+    def reverseLevelOrderBFSTraverse(self):
+        if not self.root:
+            return None
+
+        from collections import deque
+        queue = []
+        stack = deque()
+        queue.append(self.root)  # will be the first one to pop
+        stack.append(self.root)  # will be the last one to pop
+
+        while queue:
+            nodesInQueue = len(queue)
+            while nodesInQueue:
+                current = queue.pop(0)
+                current = queue.pop(nodesInQueue - 1)
+                if current.right:
+                    queue.append(current.right)
+                    stack.append(current.right)
+                if current.left:
+                    queue.append(current.left)
+                    stack.append(current.left)
+                nodesInQueue -= 1
+        return stack
+
+    def isValidBinaryTree(self):
+        if not self.root:
+            return "Not even a tree!"
+
+        queue = [self.root]
+        flag = False
+        while queue:
+            current = queue.pop(0)
+            if current.left and current.right:
+                if flag:
+                    return "Not a complete binary tree!"
+                else:
+                    queue.append(current.left)
+                queue.append(current.right)
+            elif current.left and not current.right:
+                if flag:
+                    return "Not a complete binary tree!"
+                else:
+                    flag = True
+                    queue.append(current.left)
+            elif not current.left and current.right:
+                return "Not a complete binary tree!"
+        return "Yes it is a tree!"
+
+    def calculateBinaryTreeHeight(self):
+        if not self.root:
+            return None
+
+        queue = []
+        queue.append(self.root)
+        depth = 0
+        while queue:
+            nodesInQueue = len(queue)
+            while nodesInQueue:
+                current = queue.pop(0)
+                if current.left:
+                    queue.append(current.left)
+                if current.right:
+                    queue.append(current.right)
+                nodesInQueue -= 1
+            depth += 1
+        return depth
+
+    def maxDepth(self, node):
+        if not node:
+            return 0
+        return 1 + max(self.maxDepth(node.left), self.maxDepth(node.right))
+
+    def deleteTree(self, node):
+        if not node:
+            return None
+        if node.left:
+            self.deleteBinaryTree(node.left)
+        if node.right:
+            self.deleteBinaryTree(node.right)
+        node = None
 
 
 def createATree(nums):
@@ -100,7 +256,6 @@ def areIdentical(x, y):
 
     return "Identical"
 
-
 # nums1 = [4, 10, 20, 5, 12, 89, 45, 23]
 # nums2 = [4, 10, 20, 5, 12, 89, 23, 45]
 # tree1 = createATree(nums1)
@@ -109,269 +264,26 @@ def areIdentical(x, y):
 # -----------------------------------------------------------------------------
 # -----------------------------------------------------------------------------
 
-
-# Calculate the height of a binary tree
-# The height or depth of a binary tree is the total number of
-# edges or nodes on the longest path from the root node to the leaf node
-# Solution A
-def calculateBinaryTreeHeight(tree):
-    if not tree.root:
-        return None
-
-    queue = []
-    queue.append(tree.root)
-    depth = 0
-
-    while queue:
-        nodesInQueue = len(queue)
-        while nodesInQueue:
-            current = queue.pop(0)
-            if current.left:
-                queue.append(current.left)
-            if current.right:
-                queue.append(current.right)
-            nodesInQueue -= 1
-        depth += 1
-
-    return depth
-
-
-# Solution B:
-def maxDepth(node):
-    if not node:
-        return 0
-    return 1 + max(maxDepth(node.left), maxDepth(node.right))
-
-
-# nums = [4, 10, 20, 5, 12, 89, 45, 23]
-# tree = createATree(nums)
-# print(calculateBinaryTreeHeight(tree))
-# print(maxDepth(tree.root))
-# -----------------------------------------------------------------------------
-# -----------------------------------------------------------------------------
-
-
-# Delete a binary tree
-def deleteBinaryTree(node):
-    if not node:
-        return None
-    if node.left:
-        deleteBinaryTree(node.left)
-    if node.right:
-        deleteBinaryTree(node.right)
-    node = None
-
-
-# nums = [4, 10, 20, 5, 12, 89, 45, 23]
-# tree = createATree(nums)
-# tree = deleteBinaryTree(tree.root)
-# -----------------------------------------------------------------------------
-# -----------------------------------------------------------------------------
-
-
-# traverse a tree in an inorder fashion - DepthFirst
-# depth of the node on the left
-# the node
-# depth of the node on the right
-def inOrderDFSTreeTraversal(tree):
-    if not tree.root:
-        return None
-    queue = []
-
-    def traverse(node):
-        if node.left:
-            traverse(node.left)
-        queue.append(node)
-        if node.right:
-            traverse(node.right)
-
-    traverse(tree.root)
-    return queue
-
-
 #                   4
 #          10               20
 #      5       12       89       45
 #   23   32
 # nums = [4, 10, 20, 5, 12, 89, 45, 23, 32]
 # tree = createATree(nums)
+
 # Q = inOrderDFSTreeTraversal(tree)
-# for q in Q:
-#     print(q.val, end=" ")
-# -----------------------------------------------------------------------------
-# -----------------------------------------------------------------------------
-
-
-# traverse a tree in a preorder fashion - DepthFirst
-# the node
-# depth of the node on the left
-# depth of the node on the right
-def preOrderDFSTreeTraversal(tree):
-    if not tree.root:
-        return None
-    queue = []
-
-    def traverse(node):
-        queue.append(node)
-        if node.left:
-            traverse(node.left)
-        if node.right:
-            traverse(node.right)
-
-    traverse(tree.root)
-    return queue
-
-
-#                   4
-#          10               20
-#      5       12       89       45
-#   23   32
-# nums = [4, 10, 20, 5, 12, 89, 45, 23, 32]
-# tree = createATree(nums)
 # Q = preOrderDFSTreeTraversal(tree)
-# for q in Q:
-#     print(q.val, end=" ")
-# -----------------------------------------------------------------------------
-# -----------------------------------------------------------------------------
-
-
-# traverse a tree in a postorder fashion - DepthFirst
-# depth of the node on the left
-# depth of the node on the right
-# the node
-def postOrderDFSTreeTraversal(tree):
-    if not tree.root:
-        return None
-    queue = []
-
-    def traverse(node):
-        if node.left:
-            traverse(node.left)
-        if node.right:
-            traverse(node.right)
-        queue.append(node)
-
-    traverse(tree.root)
-    return queue
-
-
-#                   4
-#          10               20
-#      5       12       89       45
-#   23   32
-# nums = [4, 10, 20, 5, 12, 89, 45, 23, 32]
-# tree = createATree(nums)
 # Q = postOrderDFSTreeTraversal(tree)
-# for q in Q:
-#     print(q.val, end=" ")
-# -----------------------------------------------------------------------------
-# -----------------------------------------------------------------------------
-
-
-# traverse a tree in a level order fashion - BreadthFirst
-def levelOrderBFSTreeTraversal(tree):
-    if not tree.root:
-        return None
-    data = [tree.root]
-    queue = [tree.root]
-    while queue:
-        nodesInQueue = len(queue)
-        while nodesInQueue:
-            current = queue.pop(0)
-            if current.left:
-                data.append(current.left)
-                queue.append(current.left)
-            if current.right:
-                data.append(current.right)
-                queue.append(current.right)
-            nodesInQueue -= 1
-    return data
-
-
-#                   4
-#          10               20
-#      5       12       89       45
-#   23   32
-# nums = [4, 10, 20, 5, 12, 89, 45, 23, 32]
-# tree = createATree(nums)
 # Q = levelOrderBFSTreeTraversal(tree)
+# Q = reverseLevelOrderBFSTreeTraversal(tree)
+
+# while Q:
+#     print(Q.pop().val, end=" ")
 # for q in Q:
 #     print(q.val, end=" ")
-# -----------------------------------------------------------------------------
-# -----------------------------------------------------------------------------
 
-
-# traverse a tree in a reverse level order
-def reverseLevelOrderBFSTreeTraversal(tree):
-    from collections import deque
-
-    if not tree.root:
-        return None
-    queue = []
-    stack = deque()
-    queue.append(tree.root)  # will be the first one to pop
-    stack.append(tree.root)  # will be the last one to pop
-
-    while queue:
-        nodesInQueue = len(queue)
-        while nodesInQueue:
-            current = queue.pop(0)
-            current = queue.pop(nodesInQueue - 1)
-            if current.right:
-                queue.append(current.right)
-                stack.append(current.right)
-            if current.left:
-                queue.append(current.left)
-                stack.append(current.left)
-            nodesInQueue -= 1
-    return stack
-
-
-#                   4
-#          10               20
-#      5       12       89       45
-#   23   32
-# nums = [4, 10, 20, 5, 12, 89, 45, 23, 32]
-# tree = createATree(nums)
-# S = reverseLevelOrderBFSTreeTraversal(tree)
-# while S:
-#     print(S.pop().val, end=" ")
-# -----------------------------------------------------------------------------
-# -----------------------------------------------------------------------------
-
-
-# check if the given tree is a complete binary tree
-def checkIfBinaryTree(tree):
-    if not tree.root:
-        return "Not even a tree!"
-
-    queue = [tree.root]
-    flag = False
-    while queue:
-        current = queue.pop(0)
-        if current.left and current.right:
-            if flag:
-                return "Not a complete binary tree!"
-            else:
-                queue.append(current.left)
-            queue.append(current.right)
-        elif current.left and not current.right:
-            if flag:
-                return "Not a complete binary tree!"
-            else:
-                flag = True
-                queue.append(current.left)
-        elif not current.left and current.right:
-            return "Not a complete binary tree!"
-    return "Yes it is a tree!"
-
-
-#                   4
-#          10               20
-#      5       12       89       45
-#   23  32   44  21
-# nums = [4, 10, 20, 5, 12, 89, 45, 23, 32, 44, 21]
-# tree = createATree(nums)
+# self.maxDepth(tree.root)
 # tree.root.left.left.right = None
 # tree.root.left.right.left = None
-# print(checkIfBinaryTree(tree))
+# print(tree.isValidBinaryTree())
+# print(self.deleteBinaryTree(tree.root)) # should be none

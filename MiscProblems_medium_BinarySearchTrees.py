@@ -68,20 +68,15 @@ class BinarySearchTree:
             return None
 
         def traverse(node):
-            if value > node.val:
-                if node.right:
-                    self.parent = node
-                    return traverse(node.right)
-                else:
-                    return None
-            elif value < node.val:
-                if node.left:
-                    self.parent = node
-                    return traverse(node.left)
-                else:
-                    return None
-            elif value == node.val:
+            if value == node.val:
                 return node
+            elif value > node.val and node.right:
+                self.parent = node
+                return traverse(node.right)
+            elif value < node.val and node.left:
+                self.parent = node
+                return traverse(node.left)
+            else: return None
 
         self.parent = None
         return traverse(self.root), self.parent
@@ -125,6 +120,6 @@ def createATree(nums):
 #    2            13               100
 nums = [14, 10, 20, 5, 12, 17, 89, 2, 13, 100]
 tree = createATree(nums)
-node, parent = tree.find(20)
-tree = tree.delete(89)
-print(12)
+node, parent = tree.find(5)
+# tree = tree.delete(89)
+print(node.val, parent.val)

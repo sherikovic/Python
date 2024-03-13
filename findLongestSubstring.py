@@ -10,9 +10,9 @@ def findLongestSubstring(string):
     maxLen = 0
     strdict = {}
     while (j < len(string)):
-        if string[i] not in strdict.keys():
+        if i<len(string) and string[i] not in strdict.keys():
             strdict[string[i]] = 1
-            if i is not len(string)-1:
+            if i is not len(string):
                 i += 1
         else:
             maxLen = max(maxLen, abs(j-i))
@@ -21,8 +21,9 @@ def findLongestSubstring(string):
             i = j
     print(maxLen)
 
-findLongestSubstring('')
-findLongestSubstring('rithmschool')
-findLongestSubstring('thisisawesome')
-findLongestSubstring('thecatinthehat')
-findLongestSubstring('bbbbbb')
+# findLongestSubstring('')
+findLongestSubstring('au')
+# findLongestSubstring('rithmschool')
+# findLongestSubstring('thisisawesome')
+# findLongestSubstring('thecatinthehat')
+# findLongestSubstring('bbbbbb')

@@ -35,6 +35,31 @@ class singlyLinkedList:
             return True
         else:
             return False
+    def insert(self, val, index): # there has to be a list to insert in
+        if index < 0 or index >= self.length: return None
+        if index == 0: return self.unshift(val)
+        nodeBeforeToBeAdded = self.get(index-1)
+        nodeAfterToBeAdded = nodeBeforeToBeAdded.next
+        newNode = Node(val)
+        nodeBeforeToBeAdded.next = newNode
+        newNode.next = nodeAfterToBeAdded
+        self.length += 1
+        return newNode
+    def sortedInsert(self, val): # insert in an already sorted list
+        if not self.head:
+            self.head = Node(val)
+            self.length += 1
+            return self.head
+        if val < self.head.val:
+            return self.unshift(val)
+        current = self.head
+        index = 0
+        while current.next:
+            index += 1
+            if val > current.next.val:
+                current = current.next
+            elif val < current.next.val:
+                return self.insert(val, index)
     def push(self, val):
         newNode = Node(val)
         if self.length == 0:
@@ -92,7 +117,62 @@ class singlyLinkedList:
             next = temp
         self.tail.next = None
         return self
+    def sort(self):
+        if not self.head: return None
+        orderedList = singlyLinkedList()
+        current = self.head
+        while current:
+            orderedList.sortedInsert(current.val)
+            current = current.next
+        return orderedList
+    def printList(self):
+        ptr = self.head
+        while ptr:
+            if ptr.next:
+                print(ptr.val, end=" -> ")
+            else:
+                print(ptr.val)
+            ptr = ptr.next
 
+
+def mergeTwoLOrderedists(L1, L2):
+    mergedList = singlyLinkedList()
+    pointer1 = L1.head
+    pointer2 = L2.head
+    if pointer1.val < pointer2.val:
+        mergedList.push(pointer1.val)
+        pointer1 = pointer1.next
+    else:
+        mergedList.push(pointer2.val)
+        pointer2 = pointer2.next
+    while pointer1 and pointer2:
+        if pointer1.val < pointer2.val:
+            mergedList.push(pointer1.val)
+            pointer1 = pointer1.next
+        else:
+            mergedList.push(pointer2.val)
+            pointer2 = pointer2.next
+    while pointer1:
+        mergedList.push(pointer1.val)
+        pointer1 = pointer1.next
+    while pointer2:
+        mergedList.push(pointer2.val)
+        pointer2 = pointer2.next
+    mergedList.printList()
+    return mergedList
+
+
+L1 = singlyLinkedList()
+L2 = singlyLinkedList()
+for i in [1, 3, 5, 7, 9]: L1.push(i)
+for i in [1, 2, 4, 6, 10, 23]: L2.push(i)
+L1.sort()
+L2.sort()
+mergeTwoLOrderedists(L1, L2)
+
+
+
+############## reverse ##############
 # 11 -> 4 -> 8 -> 14 -> 23
 # 11 <- 4 <- 8 <- 14 <- 23
 
@@ -123,17 +203,21 @@ class singlyLinkedList:
 # current = 23
 # next = none
 
-LL = singlyLinkedList()
-LL.push(11)
-LL.push(4)
-LL.push(8)
-LL.push(14)
-LL.push(23)
-var = LL.get(4)
-print(var.val)
-LL.set(3, 200)
-LL.remove(1)
+# LL = singlyLinkedList()
+# LL.push(11)
+# LL.push(4)
+# LL.push(8)
+# LL.push(14)
+# LL.push(23)
+# var = LL.get(4)
+# print(var.val)
+# LL.set(3, 200)
+# LL.printList()
+# LL.remove(1)
 # LL.unshift(2)
 # val = LL.pop()
 # LL.reverse()
-print("e")
+# LL.insert(33, 2)
+# LL.printList()
+# OLL = LL.sort()
+# OLL.printList()
