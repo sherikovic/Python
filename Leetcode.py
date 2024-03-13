@@ -192,17 +192,18 @@ def addTwoNumbers(l1, l2):
 # l2 = createList([7, 6, 4])
 # addTwoNumbers(l1, l2)
 
+
 #--------------------------------------------------------#
 #---- Longest Substring Without Repeating Characters ----#
 #--------------------------------------------------------#
 def lengthOfLongestSubstring(s: str) -> int:
-    i = 0
-    j = 0
-    maxLen = 0
+    i, j, maxLen = 0, 0, 0
     shash = {}
+
     if len(s) == 0: return 0
     if len(s) == 1: return 1
     if s == " ": return 1
+
     while j < len(s):
         if i < len(s) and s[i] not in shash:
             shash[s[i]] = 1
@@ -212,7 +213,8 @@ def lengthOfLongestSubstring(s: str) -> int:
             shash = {}
             j += 1
             i = j
-    print(maxLen)
+
+    return maxLen
 
 lengthOfLongestSubstring("abcabcbb")
 lengthOfLongestSubstring("abcvdbuewihrna")
