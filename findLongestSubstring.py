@@ -22,7 +22,7 @@ def findLongestSubstring(string):
     print(maxLen)
 
 # findLongestSubstring('')
-findLongestSubstring('au')
+# findLongestSubstring('au')
 # findLongestSubstring('rithmschool')
 # findLongestSubstring('thisisawesome')
 # findLongestSubstring('thecatinthehat')
